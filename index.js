@@ -4,9 +4,14 @@ let router = express.Router();
 const {v4: uuidv4} = require('uuid');
 let app = express();
 const proxyManager = require('./proxyManager')
+const port = process.env.PORT || 8080;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+router.get('/', (req, res) => {
+    res.json('hello')
+})
 
 router.get('/ping', (req, res) => {
     res.json('pong');
@@ -34,7 +39,7 @@ router.get('/*', (req, res) => {
 
 app.use(router);
 
-app.listen(8080, function () {
-    console.log('listening on *:8080');
+app.listen(port, function () {
+    console.log('listening on *:' + port);
 });
 
