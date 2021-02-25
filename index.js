@@ -5,6 +5,10 @@ const {v4: uuidv4} = require('uuid');
 let app = express();
 const proxyManager = require('./proxyManager')
 const port = process.env.PORT || 8080;
+const https = require('https');
+const fs = require('fs')
+var http = require('http');
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -39,7 +43,17 @@ router.get('/*', (req, res) => {
 
 app.use(router);
 
-app.listen(port, function () {
-    console.log('listening on *:' + port);
-});
+
+http.createServer(app).listen(port);
+try{
+    https.createServer({
+        key: fs.readFileSync('/var/lib/jelastic/keys/privkey.pem'),
+        cert: fs.readFileSync('/var/lib/jelastic/keys/cert.pem'),
+        //passphrase: 'YOUR PASSPHRASE HERE'
+    }, app).listen(443, () => {
+        console.log('listening on *:' + 443);
+    });
+}catch (e){
+    console.error(e)
+}
 
