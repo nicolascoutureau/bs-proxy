@@ -52,8 +52,8 @@ try{
         key: fs.readFileSync('/var/lib/jelastic/keys/privkey.pem'),
         cert: fs.readFileSync('/var/lib/jelastic/keys/cert.pem'),
         //passphrase: 'YOUR PASSPHRASE HERE'
-    }, app).listen(8043, () => {
-        console.log('listening on *:' + 8043);
+    }, app).listen(8443, () => {
+        console.log('listening on *:' + 8443);
     });
 }catch (e){
     console.error(e)
