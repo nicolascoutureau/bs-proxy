@@ -7,7 +7,7 @@ const proxyManager = require('./proxyManager')
 const port = process.env.PORT || 8080;
 const https = require('https');
 const fs = require('fs')
-var http = require('http');
+const http = require('http');
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -44,14 +44,16 @@ router.get('/*', (req, res) => {
 app.use(router);
 
 
-http.createServer(app).listen(port);
+http.createServer(app).listen(port, () => {
+    console.log('listening on *:' + port)
+});
 try{
     https.createServer({
         key: fs.readFileSync('/var/lib/jelastic/keys/privkey.pem'),
         cert: fs.readFileSync('/var/lib/jelastic/keys/cert.pem'),
         //passphrase: 'YOUR PASSPHRASE HERE'
-    }, app).listen(443, () => {
-        console.log('listening on *:' + 443);
+    }, app).listen(8043, () => {
+        console.log('listening on *:' + 8043);
     });
 }catch (e){
     console.error(e)
