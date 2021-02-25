@@ -8,6 +8,10 @@ const proxyManager = require('./proxyManager')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+router.get('/ping', (req, res) => {
+    res.json('pong');
+})
+
 router.get("/:uuid--*", async (req, res) => {
     let domain = req.params[0];
     let uuid = req.params.uuid;
